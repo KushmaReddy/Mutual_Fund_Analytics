@@ -34,3 +34,14 @@ for file in csv_files:
     print("-" * 60)
 
 print("\nAll datasets loaded successfully!")
+import pandas as pd
+import sqlite3
+
+print("=" * 70)
+print("LOADING DATA INTO SQLITE DATABASE")
+print("=" * 70)
+
+# Connect to database
+conn = sqlite3.connect("bluestock_mf.db")
+
+print("\nDatabase Connected Successfully.")
