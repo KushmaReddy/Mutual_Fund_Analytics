@@ -72,18 +72,16 @@ ON fact_performance.amfi_code = dim_fund.amfi_code
 ORDER BY return_5yr_pct DESC
 LIMIT 5;
 -- ==========================================================
--- Query 6
--- Top 5 Funds by 5-Year Return
+-- Query 7
+-- Average Annual Income by City Tier
 -- ==========================================================
 
 SELECT
-    scheme_name,
-    return_5yr_pct
-FROM fact_performance
-JOIN dim_fund
-ON fact_performance.amfi_code = dim_fund.amfi_code
-ORDER BY return_5yr_pct DESC
-LIMIT 5;
+city_tier,
+ROUND(AVG(annual_income_lakh),2) AS average_income
+FROM fact_transactions
+GROUP BY city_tier
+ORDER BY average_income DESC;
 -- ==========================================================
 -- Query 8
 -- Total Investment Amount by Payment Mode
@@ -106,3 +104,14 @@ SELECT
 FROM fact_transactions
 GROUP BY city_tier
 ORDER BY total_investors DESC;
+-- ==========================================================
+-- Query 10
+-- Average Investment Amount by Transaction Type
+-- ==========================================================
+
+SELECT
+    transaction_type,
+    ROUND(AVG(amount_inr), 2) AS average_investment
+FROM fact_transactions
+GROUP BY transaction_type
+ORDER BY average_investment DESC;
