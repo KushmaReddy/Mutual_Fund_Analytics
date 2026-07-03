@@ -1,0 +1,6 @@
+amfi_code,fund_house,scheme_name,category,sub_category,plan,launch_date,benchmark,expense_ratio_pct,exit_load_pct,min_sip_amount,min_lumpsum_amount,fund_manager,risk_category,sebi_category_code,CAGR (%),Sharpe Ratio,Sortino Ratio,Alpha,Beta,Maximum Drawdown (%)
+120505,ICICI Prudential MF,ICICI Pru Midcap Fund - Regular - Growth,Equity,Mid Cap,Regular,2004-10-28,NIFTY Midcap 150 TRI,1.36,1.0,500,1000,Sankaran Naren,High,EC02,32.83,1.18,2.03,0.2951,-0.0175,-18.19
+119598,SBI Mutual Fund,SBI Small Cap Fund - Regular Plan - Growth,Equity,Small Cap,Regular,2009-09-09,BSE 250 SmallCap TRI,1.43,1.0,500,1000,R. Srinivasan,Very High,EC03,32.42,0.95,1.68,0.3031,-0.0035,-28.71
+149324,DSP Mutual Fund,DSP Small Cap Fund - Regular - Growth,Equity,Small Cap,Regular,2007-06-14,BSE 250 SmallCap TRI,1.52,1.0,500,1000,Vinit Sambre,Very High,EC03,32.29,0.95,1.62,0.2958,0.0367,-31.17
+148569,Mirae Asset MF,Mirae Asset Tax Saver Fund - Regular - Growth,Equity,ELSS,Regular,2015-12-28,NIFTY 500 TRI,1.6,1.0,500,1000,Neelesh Surana,High,EC05,31.95,1.23,2.15,0.2808,0.0176,-16.4
+148567,Mirae Asset MF,Mirae Asset Large Cap Fund - Regular - Growth,Equity,Large Cap,Regular,2008-04-04,NIFTY 100 TRI,1.46,1.0,500,1000,Gaurav Misra,Moderate,EC01,30.97,1.45,2.39,0.2691,0.0105,-11.27
