@@ -1,65 +1,79 @@
+"""
+============================================================
+Mutual Fund Analytics Capstone
+File Name : eda_summary.py
+Author    : Kushma Reddy H
+
+Description:
+This script performs Exploratory Data Analysis (EDA) on the
+cleaned NAV history dataset. It displays dataset structure,
+summary statistics, and key insights.
+============================================================
+"""
+
 import pandas as pd
 
-# ======================================================
-# Exploratory Data Analysis (EDA)
-# ======================================================
 
-# Load cleaned dataset
-df = pd.read_csv("data/processed/02_nav_history.csv")
+def perform_eda():
+    """
+    Perform Exploratory Data Analysis (EDA)
+    on the cleaned NAV history dataset.
 
-print("=" * 70)
-print("EXPLORATORY DATA ANALYSIS")
-print("=" * 70)
+    Returns:
+        None
+    """
 
-# Dataset Shape
-print("\nDataset Shape")
-print(df.shape)
+    print("=" * 70)
+    print("EXPLORATORY DATA ANALYSIS")
+    print("=" * 70)
 
-# Column Names
-print("\nColumn Names")
-print(df.columns.tolist())
+    # Load cleaned dataset
+    df = pd.read_csv("data/processed/02_nav_history.csv")
 
-# First 5 Rows
-print("\nFirst 5 Rows")
-print(df.head())
+    # Dataset information
+    print("\nDataset Shape")
+    print(df.shape)
 
-# Last 5 Rows
-print("\nLast 5 Rows")
-print(df.tail())
+    print("\nColumn Names")
+    print(df.columns.tolist())
 
-# Summary Statistics
-print("\nSummary Statistics")
-print(df.describe())
+    print("\nFirst 5 Rows")
+    print(df.head())
 
-# Total Records
-print("\nTotal Records")
-print(len(df))
+    print("\nLast 5 Rows")
+    print(df.tail())
 
-# Date Range
-print("\nDate Range")
-print("From :", df["date"].min())
-print("To   :", df["date"].max())
+    # Summary statistics
+    print("\nSummary Statistics")
+    print(df.describe())
 
-# Average NAV
-print("\nAverage NAV")
-print(df["nav"].mean())
+    # Basic metrics
+    print("\nTotal Records")
+    print(len(df))
 
-# Highest NAV
-print("\nHighest NAV")
-print(df["nav"].max())
+    print("\nDate Range")
+    print("From :", df["date"].min())
+    print("To   :", df["date"].max())
 
-# Lowest NAV
-print("\nLowest NAV")
-print(df["nav"].min())
+    print("\nAverage NAV")
+    print(df["nav"].mean())
 
-# Median NAV
-print("\nMedian NAV")
-print(df["nav"].median())
+    print("\nHighest NAV")
+    print(df["nav"].max())
 
-# Standard Deviation
-print("\nStandard Deviation")
-print(df["nav"].std())
+    print("\nLowest NAV")
+    print(df["nav"].min())
 
-print("\n" + "=" * 70)
-print("EDA COMPLETED SUCCESSFULLY")
-print("=" * 70)
+    print("\nMedian NAV")
+    print(df["nav"].median())
+
+    print("\nStandard Deviation")
+    print(df["nav"].std())
+
+    print("\n" + "=" * 70)
+    print("EDA COMPLETED SUCCESSFULLY")
+    print("=" * 70)
+
+
+if __name__ == "__main__":
+    perform_eda()

@@ -1,75 +1,69 @@
+"""
+============================================================
+Mutual Fund Analytics Capstone
+File Name : validate_live_nav.py
+Author    : Kushma Reddy H
+
+Description:
+This script validates the live NAV dataset by comparing it
+with the historical NAV dataset. It displays sample records,
+column names, data types, and the latest available records
+to verify data consistency.
+============================================================
+"""
+
 import pandas as pd
 
-# Load historical NAV
-historical = pd.read_csv("data/raw/02_nav_history.csv")
 
-# Load live NAV
-live = pd.read_csv("data/raw/live_nav.csv")
+def validate_live_nav():
+    """
+    Validate the live NAV dataset against the historical NAV dataset.
 
-print("=" * 60)
-print("Historical Dataset")
-print("=" * 60)
+    Returns:
+        None
+    """
 
-print(historical.head())
+    # Load datasets
+    historical = pd.read_csv("data/raw/02_nav_history.csv")
+    live = pd.read_csv("data/raw/live_nav.csv")
 
-print()
+    print("=" * 60)
+    print("LIVE NAV VALIDATION")
+    print("=" * 60)
 
-print("=" * 60)
-print("Live Dataset")
-print("=" * 60)
+    # Historical dataset preview
+    print("\nHistorical Dataset (First 5 Records)")
+    print(historical.head())
 
-print(live.head())
+    # Live dataset preview
+    print("\nLive Dataset (First 5 Records)")
+    print(live.head())
 
-print()
+    # Column comparison
+    print("\nHistorical Columns")
+    print(historical.columns.tolist())
 
-print("=" * 60)
-print("Historical Columns")
-print("=" * 60)
+    print("\nLive Columns")
+    print(live.columns.tolist())
 
-print(historical.columns.tolist())
+    # Data types
+    print("\nHistorical Data Types")
+    print(historical.dtypes)
 
-print()
+    print("\nLive Data Types")
+    print(live.dtypes)
 
-print("=" * 60)
-print("Live Columns")
-print("=" * 60)
+    # Latest records
+    print("\nLatest Historical Records")
+    print(historical.tail())
 
-print(live.columns.tolist())
+    print("\nLatest Live Records")
+    print(live.head())
 
-print()
+    print("\n" + "=" * 60)
+    print("LIVE NAV VALIDATION COMPLETED SUCCESSFULLY")
+    print("=" * 60)
 
-print("=" * 60)
-print("Historical Data Types")
-print("=" * 60)
 
-print(historical.dtypes)
-
-print()
-
-print("=" * 60)
-print("Live Data Types")
-print("=" * 60)
-
-print(live.dtypes)
-
-print()
-
-print("=" * 60)
-print("Latest Historical Records")
-print("=" * 60)
-
-print(historical.tail())
-
-print()
-
-print("=" * 60)
-print("Latest Live Records")
-print("=" * 60)
-
-print(live.head())
-
-print()
-
-print("=" * 60)
-print("Validation Completed Successfully")
-print("=" * 60)
+if __name__ == "__main__":
+    validate_live_nav()

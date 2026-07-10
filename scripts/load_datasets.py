@@ -1,47 +1,61 @@
-# ==========================================================
-# Mutual Fund Analytics Project
-# Day 1 - Load All Datasets
-# ==========================================================
+"""
+============================================================
+Mutual Fund Analytics Capstone
+File Name : load_datasets.py
+Author    : Kushma Reddy H
 
-import pandas as pd
+Description:
+This script loads all CSV datasets from the raw data folder
+and stores them in a dictionary for further processing.
+============================================================
+"""
+
 import os
+import pandas as pd
 
-# Folder containing CSV files
+
 DATA_PATH = "data/raw"
 
-# Dictionary to store DataFrames
-datasets = {}
 
-# Get all CSV files
-csv_files = [file for file in os.listdir(DATA_PATH) if file.endswith(".csv")]
+def load_datasets():
+    """
+    Load all CSV datasets from the raw folder.
 
-print("=" * 60)
-print("Loading Datasets")
-print("=" * 60)
+    Returns:
+        dict: Dictionary containing all loaded DataFrames.
+    """
 
-# Read every CSV file
-for file in csv_files:
+    # Dictionary to store datasets
+    datasets = {}
 
-    file_path = os.path.join(DATA_PATH, file)
+    # Get all CSV files
+    csv_files = [
+        file for file in os.listdir(DATA_PATH)
+        if file.endswith(".csv")
+    ]
 
-    df = pd.read_csv(file_path)
+    print("=" * 60)
+    print("LOADING DATASETS")
+    print("=" * 60)
 
-    datasets[file] = df
+    # Read each CSV file
+    for file in csv_files:
 
-    print(f"Loaded: {file}")
-    print(f"Rows : {df.shape[0]}")
-    print(f"Columns : {df.shape[1]}")
-    print("-" * 60)
+        file_path = os.path.join(DATA_PATH, file)
 
-print("\nAll datasets loaded successfully!")
-import pandas as pd
-import sqlite3
+        df = pd.read_csv(file_path)
 
-print("=" * 70)
-print("LOADING DATA INTO SQLITE DATABASE")
-print("=" * 70)
+        datasets[file] = df
 
-# Connect to database
-conn = sqlite3.connect("bluestock_mf.db")
+        print(f"Loaded : {file}")
+        print(f"Rows    : {df.shape[0]}")
+        print(f"Columns : {df.shape[1]}")
+        print("-" * 60)
 
-print("\nDatabase Connected Successfully.")
+    print("\nAll datasets loaded successfully!")
+
+    return datasets
+
+
+if __name__ == "__main__":
+    load_datasets()

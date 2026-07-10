@@ -1,53 +1,70 @@
+"""
+============================================================
+Mutual Fund Analytics Capstone
+File Name : clean_investor_transactions.py
+Author    : Kushma Reddy H
+
+Description:
+This script cleans the investor transactions dataset by:
+1. Loading the raw transaction data
+2. Converting transaction dates
+3. Removing duplicate records
+4. Validating transaction amounts
+5. Standardizing transaction types
+6. Checking KYC status
+7. Saving the cleaned dataset
+============================================================
+"""
+
 import pandas as pd
 
-# Load dataset
-df = pd.read_csv("data/raw/08_investor_transactions.csv")
 
-print("=" * 70)
-print("INVESTOR TRANSACTIONS CLEANING")
-print("=" * 70)
+def clean_investor_transactions():
 
-print("\nOriginal Shape:", df.shape)
+    print("=" * 70)
+    print("INVESTOR TRANSACTIONS CLEANING")
+    print("=" * 70)
 
-print("\nColumns:")
-print(df.columns)
+    # Load raw dataset
+    df = pd.read_csv("data/raw/08_investor_transactions.csv")
 
-print("\nFirst 5 Rows:")
-print(df.head())
-# Convert transaction date to datetime
-df["transaction_date"] = pd.to_datetime(df["transaction_date"])
+    print("\nOriginal Shape:", df.shape)
 
-print("\nTransaction date converted successfully.")
-print(df.dtypes)
-# Remove duplicate rows
-duplicates = df.duplicated().sum()
-df = df.drop_duplicates()
+    # Convert transaction date to datetime format
+    df["transaction_date"] = pd.to_datetime(df["transaction_date"])
 
-print("\nDuplicate rows removed:", duplicates)
-# Validate transaction amount
-invalid_amount = (df["amount_inr"] <= 0).sum()
+    # Remove duplicate rows
+    duplicates = df.duplicated().sum()
+    df = df.drop_duplicates()
 
-print("\nInvalid Amount Records:", invalid_amount)
-# Standardize transaction type
-df["transaction_type"] = (
-    df["transaction_type"]
-    .str.strip()
-    .str.title()
-)
+    print("Duplicate rows removed:", duplicates)
 
-print("\nTransaction Types:")
-print(df["transaction_type"].unique())
-# Check KYC Status
-print("\nKYC Status Values:")
-print(df["kyc_status"].value_counts())
-# Save cleaned file
-output_file = "data/processed/clean_transactions.csv"
+    # Check invalid transaction amounts
+    invalid_amount = (df["amount_inr"] <= 0).sum()
+    print("Invalid Amount Records:", invalid_amount)
 
-df.to_csv(output_file, index=False)
+    # Standardize transaction type values
+    df["transaction_type"] = (
+        df["transaction_type"]
+        .str.strip()
+        .str.title()
+    )
 
-print("\nCleaned transactions saved successfully.")
-print("Location:", output_file)
+    # Display KYC status summary
+    print("\nKYC Status Summary:")
+    print(df["kyc_status"].value_counts())
 
-print("\n" + "=" * 70)
-print("INVESTOR TRANSACTION CLEANING COMPLETED")
-print("=" * 70)
+    # Save cleaned dataset
+    output_file = "data/processed/clean_transactions.csv"
+    df.to_csv(output_file, index=False)
+
+    print("\nCleaned transactions saved successfully.")
+    print("Location:", output_file)
+
+    print("=" * 70)
+    print("INVESTOR TRANSACTION CLEANING COMPLETED")
+    print("=" * 70)
+
+
+if __name__ == "__main__":
+    clean_investor_transactions()

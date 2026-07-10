@@ -1,101 +1,85 @@
+"""
+============================================================
+Mutual Fund Analytics Capstone
+File Name : clean_scheme_performance.py
+Author    : Kushma Reddy H
+
+Description:
+This script cleans the Scheme Performance dataset by:
+1. Loading the raw scheme performance data
+2. Converting return columns to numeric
+3. Converting expense ratio to numeric
+4. Validating Sharpe Ratio
+5. Validating Expense Ratio
+6. Removing duplicate records
+7. Saving the cleaned dataset
+============================================================
+"""
+
 import pandas as pd
 
-# Load dataset
-df = pd.read_csv("data/raw/07_scheme_performance.csv")
 
-print("=" * 70)
-print("SCHEME PERFORMANCE CLEANING")
-print("=" * 70)
+def clean_scheme_performance():
 
-print("\nOriginal Shape:", df.shape)
+    print("=" * 70)
+    print("SCHEME PERFORMANCE CLEANING")
+    print("=" * 70)
 
-print("\nColumns:")
-print(df.columns)
+    # Load raw dataset
+    df = pd.read_csv("data/raw/07_scheme_performance.csv")
 
-print("\nFirst 5 Rows:")
-print(df.head())
-import pandas as pd
+    print("\nOriginal Shape:", df.shape)
 
-# Load dataset
-df = pd.read_csv("data/raw/07_scheme_performance.csv")
+    # Return columns
+    return_columns = [
+        "return_1yr_pct",
+        "return_3yr_pct",
+        "return_5yr_pct"
+    ]
 
-print("=" * 70)
-print("SCHEME PERFORMANCE CLEANING")
-print("=" * 70)
+    # Convert return columns to numeric
+    for col in return_columns:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
 
-print("\nOriginal Shape:", df.shape)
+    print("Return columns converted successfully.")
 
-print("\nColumns:")
-print(df.columns)
+    # Convert expense ratio to numeric
+    df["expense_ratio_pct"] = pd.to_numeric(
+        df["expense_ratio_pct"],
+        errors="coerce"
+    )
 
-print("\nFirst 5 Rows:")
-print(df.head())
-# --------------------------------------------------------
-# Convert return columns to numeric
-# --------------------------------------------------------
+    print("Expense Ratio converted successfully.")
 
-return_columns = [
-    "return_1yr_pct",
-    "return_3yr_pct",
-    "return_5yr_pct"
-]
+    # Check negative Sharpe Ratio
+    negative_sharpe = (df["sharpe_ratio"] < 0).sum()
+    print("Negative Sharpe Ratios:", negative_sharpe)
 
-for col in return_columns:
-    df[col] = pd.to_numeric(df[col], errors="coerce")
+    # Validate Expense Ratio
+    invalid_expense = (
+        (df["expense_ratio_pct"] < 0.1) |
+        (df["expense_ratio_pct"] > 2.5)
+    ).sum()
 
-print("\nReturn columns converted successfully.")
+    print("Invalid Expense Ratios:", invalid_expense)
 
-# --------------------------------------------------------
-# Convert Expense Ratio to numeric
-# --------------------------------------------------------
+    # Remove duplicate rows
+    duplicates = df.duplicated().sum()
+    df = df.drop_duplicates()
 
-df["expense_ratio_pct"] = pd.to_numeric(
-    df["expense_ratio_pct"],
-    errors="coerce"
-)
+    print("Duplicate Rows Removed:", duplicates)
 
-print("Expense Ratio converted successfully.")
+    # Save cleaned dataset
+    output_file = "data/processed/clean_scheme_performance.csv"
+    df.to_csv(output_file, index=False)
 
-# --------------------------------------------------------
-# Check Negative Sharpe Ratio
-# --------------------------------------------------------
+    print("\nDataset cleaned successfully.")
+    print("Saved at:", output_file)
 
-negative_sharpe = (df["sharpe_ratio"] < 0).sum()
+    print("=" * 70)
+    print("SCHEME PERFORMANCE CLEANING COMPLETED")
+    print("=" * 70)
 
-print("\nNegative Sharpe Ratios:", negative_sharpe)
 
-# --------------------------------------------------------
-# Validate Expense Ratio
-# --------------------------------------------------------
-
-invalid_expense = (
-    (df["expense_ratio_pct"] < 0.1) |
-    (df["expense_ratio_pct"] > 2.5)
-).sum()
-
-print("Invalid Expense Ratios:", invalid_expense)
-
-# --------------------------------------------------------
-# Remove Duplicate Rows
-# --------------------------------------------------------
-
-duplicates = df.duplicated().sum()
-
-df = df.drop_duplicates()
-
-print("Duplicate Rows Removed:", duplicates)
-
-# --------------------------------------------------------
-# Save Clean Dataset
-# --------------------------------------------------------
-
-output_file = "data/processed/clean_scheme_performance.csv"
-
-df.to_csv(output_file, index=False)
-
-print("\nDataset cleaned successfully.")
-print("Saved at:", output_file)
-
-print("\n" + "=" * 70)
-print("SCHEME PERFORMANCE CLEANING COMPLETED")
-print("=" * 70)
+if __name__ == "__main__":
+    clean_scheme_performance()

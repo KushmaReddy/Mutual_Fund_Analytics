@@ -1,46 +1,69 @@
+"""
+============================================================
+Mutual Fund Analytics Capstone
+File Name : live_nav_fetch.py
+Author    : Kushma Reddy H
+
+Description:
+This script fetches live NAV data from the MFAPI,
+displays fund information, and saves the NAV history
+to a CSV file.
+============================================================
+"""
+
 import requests
 import pandas as pd
-import os
 
-# API URL
-url = "https://api.mfapi.in/mf/125497"
 
-print("=" * 60)
-print("Fetching Live NAV Data")
-print("=" * 60)
+def fetch_live_nav():
+    """
+    Fetch live NAV data from MFAPI and save it as a CSV file.
 
-# Send GET request
-response = requests.get(url)
+    Returns:
+        None
+    """
 
-# Check if request was successful
-if response.status_code == 200:
+    # API URL
+    url = "https://api.mfapi.in/mf/125497"
 
-    print("API Connected Successfully!\n")
+    print("=" * 60)
+    print("FETCHING LIVE NAV DATA")
+    print("=" * 60)
 
-    data = response.json()
+    # Send GET request
+    response = requests.get(url)
 
-    # Fund Information
-    meta = data["meta"]
+    # Check API response
+    if response.status_code == 200:
 
-    print("Fund Name :", meta["scheme_name"])
-    print("Fund House :", meta["fund_house"])
-    print("Scheme Type :", meta["scheme_type"])
+        print("API Connected Successfully!\n")
 
-    # NAV History
-    nav_df = pd.DataFrame(data["data"])
+        data = response.json()
 
-    print("\nFirst 5 Records")
-    print(nav_df.head())
+        # Display fund information
+        meta = data["meta"]
 
-    # Save CSV
-    output_path = "data/raw/live_nav.csv"
+        print("Fund Name   :", meta["scheme_name"])
+        print("Fund House  :", meta["fund_house"])
+        print("Scheme Type :", meta["scheme_type"])
 
-    nav_df.to_csv(output_path, index=False)
+        # Convert NAV history to DataFrame
+        nav_df = pd.DataFrame(data["data"])
 
-    print("\nCSV Saved Successfully!")
-    print(output_path)
+        print("\nFirst 5 Records")
+        print(nav_df.head())
 
-else:
+        # Save CSV
+        output_path = "data/raw/live_nav.csv"
+        nav_df.to_csv(output_path, index=False)
 
-    print("Failed to Fetch Data")
-    print("Status Code :", response.status_code)
+        print("\nCSV Saved Successfully!")
+        print("Location :", output_path)
+
+    else:
+        print("Failed to Fetch Data")
+        print("Status Code :", response.status_code)
+
+
+if __name__ == "__main__":
+    fetch_live_nav()
